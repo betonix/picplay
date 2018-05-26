@@ -16,11 +16,12 @@ import {
   Button,
   AsyncStorage,
   TouchableHighlight,
-  TouchableOpacity
+  TouchableOpacity,
+  ImageBackground 
 
 } from 'react-native';
 
-const width = Dimensions.get('screen').width;
+var width = Dimensions.get('screen').width;
 
 export default class Login extends Component {
 
@@ -31,43 +32,18 @@ export default class Login extends Component {
   
     constructor(props){
       super(props);
-      this.state = {
-        usuario : '',
-        senha : ''
-      }
+      this.state = {width:60},
+	  
+	  Dimensions.addEventListener('change', (e) => {
+	  const { width, height } = e.window;
+	   this.setState({width, height});
+	  })
     }
     
-    login(){
+	
+	
+    createCount(){
 
-      const loginInfo = {
-
-        method : 'POST',
-        body   : JSON.stringify({
-          "email": "peter@klaven",
-          "password": "cityslicka"
-      })
-
-      }
-
-      fetch( 'http://192.168.15.13:3000/login',loginInfo)
-      .then((response) => response.json())
-      .then((responseJson) => {
-          console.log(responseJson);// your JSON response is here   
-           console.warn(responseJson);
-           AsyncStorage.setItem('usuario','betonix');
-           return AsyncStorage.getItem('usuario');
-
-        }).then(usuario=>{
-
-           this.setState({mensagem:'Erro no login'});
-          /* this.props.navigator.push({screen:'Game1',animated: true, // does the pop have transition animation or does it happen immediately (optional)
-           animationType: 'slide-horizontal',})
-          /*this.props.navigator.showInAppNotification({
-            screen: "Loginn", // unique ID registered with Navigation.registerScreen
-            passProps: {}, // simple serializable object that will pass as props to the in-app notification (optional)
-            autoDismissTimerSec: 2 // auto dismiss notification in seconds
-           });*/
-        })
 
     }
 
@@ -80,24 +56,31 @@ export default class Login extends Component {
     
 
     return (
+	<ImageBackground  style={styles.container2} source={require('../images.jpg')}>
+
       <View style = {styles.form}>
 
           <View style={styles.container}>
-
-            <Text style={styles.titulo} >picPlay</Text>
-
+		  
+			 <View style={styles.formTitulo}>
+				<Text style={styles.titulo} >picPlay</Text>
+				<Text style={styles.subtitulo} >What movie is this?</Text>
+			</View>	
+			
             <View style={styles.formLogin}>
-
-              <TextInput style={styles.input} placeholder = "Usuario..." onChangeText={ texto=> this.setState({usuario:texto})}/>
-
-              <TextInput style={styles.input} placeholder = "Senha..." secureTextEntry = {true} onChangeText={ senha=> this.setState({senha:senha})}/>
-
-             </View>
-            <Button style={styles.buttonLogin}  onPress={this.login.bind(this)} title="Login"/>
-
-             <Text style={styles.loginMsg} >{this.state.mensagem}</Text>
+			
+             <TouchableHighlight underlayColor = {'rgb(255, 51, 153)'} activeOpacity={1} style={styles.create} onPress={this.createCount}>
+				 <Text style={styles.textButton}>Create Account</Text>
+			 </TouchableHighlight>
+			 
+			 <View style={styles.guestview}>
+				<Text style={styles.guest} >or continue as Guest</Text>
+			 </View>
+			 
+			</View>
           </View>
       </View>
+	  </ImageBackground >
     );
   }
 }
@@ -109,9 +92,21 @@ const styles = StyleSheet.create({
     alignItems      : 'center',
     justifyContent  : 'center'
   },
+  container2: {
+    flex: 1,
+    width: undefined,
+    height: undefined,
+    backgroundColor:'transparent',
+    justifyContent: 'center',
+    alignItems: 'center',
+	
+	
+  },
 
   form:{
-   flex            : 1
+   flex            : 1,
+   backgroundColor: 'rgba(0,0,0,0.4)',
+   width:width
   },
 
   input : {
@@ -119,23 +114,56 @@ const styles = StyleSheet.create({
     height :60,
    
   },
-
+  textButton:{
+	fontWeight : 'bold',
+    fontSize : 20,
+	color:'white'
+  },
+  formTitulo:{
+	flex:2,
+	justifyContent:'center'
+  },
+  
   formLogin:{
-    marginBottom : 50,
+	flex:1
   },
 
   titulo:{
     fontWeight : 'bold',
     fontSize : 40,
-    marginBottom : 20
+	color:'white'
+  },
+  
+  subtitulo:{
+    //fontWeight : 'bold',
+    fontSize : 15,
+	color:'white'
   },
 
   loginMsg:{
-    color : 'red',
-    marginTop : 20
+    color : 'red'
   },
-  buttonLogin:{
-    width : width
+  
+  guest:{
+	alignItems:'center',
+	color:'white',
+	fontSize:18,
+	marginTop:25,
+	opacity:0.5
+  },
+  
+  guestview:{
+	alignItems:'center'
+
+  },
+  
+  create:{
+	borderRadius:10,
+	justifyContent:'center',
+	alignItems:'center',
+	height:50,
+    width : width-50,
+	backgroundColor:'#FF69B4'
   }
 
 });
