@@ -1,3 +1,3 @@
 dependencies: \
-  /Users/betonix/picplay/node_modules/react-native/Libraries/Text/Text/NSTextStorage+FontScaling.m \
-  /Users/betonix/picplay/node_modules/react-native/Libraries/Text/Text/NSTextStorage+FontScaling.h
+  /Users/betonix/projetos/picplay/node_modules/react-native/Libraries/Text/Text/NSTextStorage+FontScaling.m \
+  /Users/betonix/projetos/picplay/node_modules/react-native/Libraries/Text/Text/NSTextStorage+FontScaling.h
